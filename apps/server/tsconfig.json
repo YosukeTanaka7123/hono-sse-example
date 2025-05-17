@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": [
+    "@tsconfig/node-ts/tsconfig.json",
+    "@tsconfig/node22/tsconfig.json"
+  ],
+
+  "compilerOptions": {
+    "types": ["node"],
+
+    /* Bundler mode */
+    "forceConsistentCasingInFileNames": true,
+    "verbatimModuleSyntax": true,
+
+    "baseUrl": ".",
+    "paths": { "~/*": ["./src/*"] },
+    "outDir": "./dist"
+  },
+
+  "include": ["src/**/*.ts"]
+}
