@@ -11,9 +11,23 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as TextStreamImport } from './routes/text-stream'
+import { Route as SseImport } from './routes/sse'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const TextStreamRoute = TextStreamImport.update({
+  id: '/text-stream',
+  path: '/text-stream',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SseRoute = SseImport.update({
+  id: '/sse',
+  path: '/sse',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -32,6 +46,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/sse': {
+      id: '/sse'
+      path: '/sse'
+      fullPath: '/sse'
+      preLoaderRoute: typeof SseImport
+      parentRoute: typeof rootRoute
+    }
+    '/text-stream': {
+      id: '/text-stream'
+      path: '/text-stream'
+      fullPath: '/text-stream'
+      preLoaderRoute: typeof TextStreamImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -39,32 +67,42 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/sse': typeof SseRoute
+  '/text-stream': typeof TextStreamRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/sse': typeof SseRoute
+  '/text-stream': typeof TextStreamRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/sse': typeof SseRoute
+  '/text-stream': typeof TextStreamRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/sse' | '/text-stream'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/sse' | '/text-stream'
+  id: '__root__' | '/' | '/sse' | '/text-stream'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SseRoute: typeof SseRoute
+  TextStreamRoute: typeof TextStreamRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SseRoute: SseRoute,
+  TextStreamRoute: TextStreamRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +115,19 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/sse",
+        "/text-stream"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/sse": {
+      "filePath": "sse.tsx"
+    },
+    "/text-stream": {
+      "filePath": "text-stream.tsx"
     }
   }
 }

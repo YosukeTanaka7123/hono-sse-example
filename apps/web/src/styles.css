@@ -1,6 +1,11 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+#app {
+  width: 100vw;
+  height: 100dvh;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
